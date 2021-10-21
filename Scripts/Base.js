@@ -65,15 +65,5 @@ Navicon.nav_Base = function (context)
             (error) => console.error(error.message)); 
     }
 
-    var addLookupFilter = (filterName, objName, customFilter) => getCtrl(objName).addCustomFilter(customFilter, filterName);
-
-    addFilterSearch = (filterName, objName, customFilter) => {
-        getCtrl(objName).addPreSearch(() => { addLookupFilter (filterName, objName, customFilter) });
-    }
-    
-    removeFilterSearch = (filterName, objName, customFilter) => {
-        getCtrl(objName).removePreSearch (() => { addLookupFilter (filterName, objName, customFilter) });
-    }
-
     return _self;
 };

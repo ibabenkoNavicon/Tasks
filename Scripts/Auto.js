@@ -1,10 +1,9 @@
+
 var Navicon = Navicon || {}
 
 Navicon.nav_Auto = (function () 
 { 
     var self = {};
-
-    const Type = { Phone: 1, Email: 2 };
 
     const Element = {
         Name: "nav_name",
@@ -20,12 +19,12 @@ Navicon.nav_Auto = (function ()
         Amount: 'nav_amount'
       };
 
-    onChangeType = () => {
+    var onChangeUsed = function() {
         try 
         {
              const usedValue = getValue(Element.Used);   
 
-             visibleCtrl([Element.OwnersCount, Element.KM, Element.IsDamaged], usedValue);
+             visibleCtrl([Element.OwnersCount, Element.KM, Element.IsDamaged], usedValue == true);
         }
         catch(ex)
         {
@@ -34,7 +33,8 @@ Navicon.nav_Auto = (function ()
     }
 
     self.onLoad = function(context) {
-        try {
+        try 
+        {
             console.log("Navicon.nav_Credit.onLoad()");
 
             this.__proto__ = Navicon.nav_Base(context);  

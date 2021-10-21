@@ -18,9 +18,16 @@ Navicon.nav_Communication = (function ()
     onChangeType = function() {
         try 
         {
-             type = etValue(Element.Type);   
-             visibleCtrl([Element.Phone], type == Type.Phone);
-             visibleCtrl([Element.Email], type == Type.Email);
+            const typeValue = getValue(Element.Type);   
+
+            if (typeValue != null) 
+            {
+                visibleCtrl([Element.Phone], typeValue == Type.Phone);
+                visibleCtrl([Element.Email], typeValue == Type.Email);
+                visibleCtrl([Element.Main], true);
+            }
+            else 
+                visibleCtrl([Element.Phone, Element.Email, Element.Main], false);
         }
         catch(ex)
         {
@@ -35,7 +42,6 @@ Navicon.nav_Communication = (function ()
             this.__proto__ = Navicon.nav_Base(context);  
 
             addOnChange([Element.Type], onChangeType);
-
             fireOnChange([Element.Type]);
         }
         catch(ex)

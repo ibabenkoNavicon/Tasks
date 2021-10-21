@@ -65,43 +65,49 @@ Navicon.nav_Agreement = (function ()
         }
     }
 
+    
     var onChangeAuto = function() {
         try 
         {
             const autoIdValue = getValue(Element.Auto);
 
-            if (autoIdValue == null || Array.isArray(autoIdValue) == false || autoIdValue.lenght == 0 || autoIdValue[0] == null)  return;
+            if (autoIdValue == null || Array.isArray(autoIdValue) == false || 
+                autoIdValue.lenght == 0 || autoIdValue[0] == null)  return;
             
             const autoRef = autoIdValue[0];
-            const filterName = "credit";
-
+            
+            uodateFilterCredit(autoRef.id);
             console.log(`autoRef: ${autoRef}`);
-
-            Xrm.WebApi.retrieveMultipleRecords(entityAutoCedit, '?$select=nav_creditid&$filter=nav_autoid eq ' + autoRef.id).then(
-                (success) => {
-                    try 
-                    {
-                        var filter = "<filter type='and'><condition attribute='nav_creditid' operator='in'>";
-                        success.entities.forEach((obj) => { filter += `<value>${obj.nav_creditid}</value>` });   
-                        filter += "</condition></filter>";
-                    
-                        removeFilterSearch(filterName, Element.Credit, filter);
-                        addFilterSearch(filterName, Element.Credit, filter);
-
-                        console.log(`filter: ${filter}`);
-                    }
-                    catch(ex)
-                    {
-                        console.error(ex);
-                    }
-                },
-                (error) => console.log(error.message)
-            );
         }
         catch(ex)
         {
             console.error(ex);
         }
+    }
+
+    var uodateFilterCredit = function(autoRefId) {
+        const viewName = "small_nav_credit";
+        const viewId =  '{00000000-0000-0000-0000-000000000001}';
+
+        const fetchXml = [ 
+            "<fetch>",
+            "<entity name='nav_credit'>",
+            "<all-attributes />",
+            "<link-entity name='nav_nav_auto_nav_credit' from='nav_creditid' to='nav_creditid' intersect='true'>",
+            "<link-entity name='nav_auto' from='nav_autoid' to='nav_autoid' intersect='true'>",
+            "<filter>",
+            "<condition attribute='nav_autoid' operator='eq' value='", autoRefId, "'/>",
+            "</filter>",
+            "</link-entity>",
+            "</link-entity>",
+            "</entity>",
+            "</fetch>"].join("");
+
+        const preGridXml = '<grid name="nav_credits" jump="nav_name" select="1" icon="1" preview="0">' +
+            '<row name="nav_credit" id="nav_creditid"><cell name="nav_name" width="300" /><cell name="createdon" width="125" /></row></grid>'
+
+        getCtrl(Element.Credit).addCustomView(viewId, "nav_credit", viewName, fetchXml, preGridXml, true);
+        setValue(Element.Credit, null);
     }
 
     self.onLoad = function(context) {
