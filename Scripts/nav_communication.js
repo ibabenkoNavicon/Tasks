@@ -1,6 +1,6 @@
 var Navicon = Navicon || {}
 
-Navicon.nav_Communication = (function () 
+Navicon.nav_communication = (function () 
 { 
     var self = {};
 
@@ -15,9 +15,12 @@ Navicon.nav_Communication = (function ()
         Main: 'nav_main'
       };
 
-    onChangeType = function() {
-        try 
-        {
+    // 2-7. На форме объекта Средство связи, при создании поля Телефон и Email скрыты. При выборе
+    // пользователем значения в поле Тип, необходимо отображать соответствующее поле: 
+    //      Если тип = Телефон, отображать поле Телефон
+    //      Если тип = E-mail, отображать поле Email.  
+    var type_onChange = function() {
+        try {
             const typeValue = getValue(Element.Type);   
 
             if (typeValue != null) 
@@ -29,8 +32,7 @@ Navicon.nav_Communication = (function ()
             else 
                 visibleCtrl([Element.Phone, Element.Email, Element.Main], false);
         }
-        catch(ex)
-        {
+        catch(ex) {
             console.error(ex);
         }
     }
@@ -38,14 +40,12 @@ Navicon.nav_Communication = (function ()
     self.onLoad = function(context) {
         try {
             console.log("Navicon.nav_Credit.onLoad()");
+            this.__proto__ = Navicon.nav_base(context);  
 
-            this.__proto__ = Navicon.nav_Base(context);  
-
-            addOnChange([Element.Type], onChangeType);
+            addOnChange([Element.Type], type_onChange);
             fireOnChange([Element.Type]);
         }
-        catch(ex)
-        {
+        catch(ex) {
             console.error(ex);
             errorDialog(ex);
         }

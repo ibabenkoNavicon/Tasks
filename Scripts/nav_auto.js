@@ -1,11 +1,11 @@
 
 var Navicon = Navicon || {}
 
-Navicon.nav_Auto = (function () 
+Navicon.nav_auto = (function () 
 { 
     var self = {};
 
-    const Element = {
+    const Elements = {
         Name: "nav_name",
         BrandId: "nav_brandid ",
         Modelid: "nav_modelid",
@@ -19,12 +19,14 @@ Navicon.nav_Auto = (function ()
         Amount: 'nav_amount'
       };
 
-    var onChangeUsed = function() {
+    // 2-8. Поля на объекте Автомобиль new_auto: Пробег, Количество владельцев, был в ДТП отображаются только
+    // при значении в поле С пробегом(new_used)=true.
+    var used_onChange = function() {
         try 
         {
-             const usedValue = getValue(Element.Used);   
+             const usedValue = getValue(Elements.Used);   
 
-             visibleCtrl([Element.OwnersCount, Element.KM, Element.IsDamaged], usedValue == true);
+             visibleCtrl([Elements.OwnersCount, Elements.KM, Elements.IsDamaged], usedValue == true);
         }
         catch(ex)
         {
@@ -36,11 +38,10 @@ Navicon.nav_Auto = (function ()
         try 
         {
             console.log("Navicon.nav_Credit.onLoad()");
+            this.__proto__ = Navicon.nav_base(context);  
 
-            this.__proto__ = Navicon.nav_Base(context);  
-
-            addOnChange([Element.Used], onChangeUsed);
-            fireOnChange([Element.Used]);
+            addOnChange([Elements.Used], used_onChange);
+            fireOnChange([Elements.Used]);
         }
         catch(ex)
         {
