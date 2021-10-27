@@ -24,8 +24,7 @@ Navicon.nav_auto = (function ()
     var used_onChange = function() {
         try 
         {
-             const usedValue = getValue(Elements.Used);   
-
+             let usedValue = getValue(Elements.Used);   
              visibleCtrl([Elements.OwnersCount, Elements.KM, Elements.IsDamaged], usedValue == true);
         }
         catch(ex)

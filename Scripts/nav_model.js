@@ -13,8 +13,8 @@ Navicon.nav_model = (function ()
             return;
 
         const roleAdmin= "Системный администратор";
-        var userRoles = Xrm.Utility.getGlobalContext().userSettings.roles.getAll();
-        var isAdmin = userRoles.some((obj) => obj.name == roleAdmin );
+        let userRoles = Xrm.Utility.getGlobalContext().userSettings.roles.getAll();
+        let isAdmin = userRoles.some(obj => obj.name == roleAdmin);
 
         if (isAdmin == false)
         {

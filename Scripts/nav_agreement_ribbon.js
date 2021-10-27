@@ -48,7 +48,7 @@ Navicon.nav_agreement_ribbon = (function ()
 
         Xrm.Utility.showProgressIndicator("Загрузка...");
         Xrm.WebApi.retrieveRecord(Entities.Credit, creditIdValue[0].id, '?$select=nav_percent').then(
-            (result) => {
+            result => {
                 try {
                     let fullCreditAmount = (result.nav_percent / 100 * creditPeriodValue * creditAmountValue) + creditAmountValue;
                     setValue(Elements.FullCreditAmount, fullCreditAmount);
@@ -57,8 +57,8 @@ Navicon.nav_agreement_ribbon = (function ()
                     console.log(ex);
                 }
             },
-            (error) => { console.log(error.message) }
-        ).finally( () => { Xrm.Utility.closeProgressIndicator() } );
+            error => console.log(error.message)
+        ).finally(() => Xrm.Utility.closeProgressIndicator());
     }
 
     // На карточку объекта Договор поместить кнопку «Пересчитать кредит». При нажатии на кнопку 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="ClientGlobalContext.js.aspx" type="text/javascript"></script>
+    <script>
+        document.onreadystatechange = function () {
+            if (document.readyState == "complete") {
+                OnDocumentLoad();
+            }
+        }
+
+        function OnDocumentLoad() {
+            console.log('iframe loaded');
+
+            for (link of parent?.document?.head.getElementsByTagName('link')) {
+                if (link.rel.toLowerCase() == 'stylesheet')
+                    addStyleSheet(link);
+            }
+        }
+
+        function addStyleSheet(objLink)
+        {
+            let elem = document.createElement("link");
+            elem.href = link.href;
+            elem.type = link.type;
+            elem.rel = link.rel;
+            document.head.appendChild(elem);
+        }
+
+        function setData(data) {
+            let grid = document.getElementById('grid');
+            for (item of data)
+            {
+                grid.innerHTML += `<div class="grid-item" onClick="creditOnClick('${item.credit_id}')">${item.credit}</div>` +
+                        `<div class="grid-item" onClick="modelOnClick('${item.model_id}')">${item.model}</div>` +
+                        `<div class="grid-item">${item.period}</div>`
+            } 
+        }
+
+        function creditOnClick(creditId) {
+            openEntityForm({entityName: 'nav_credit', entityId: creditId});
+        }
+
+        function modelOnClick(modelId) {
+            openEntityForm({entityName: 'nav_model', entityId: modelId});
+        }
+
+        function openEntityForm(formOptions) {
+            formOptions.openInNewWindow = true;
+            parent.Xrm.Navigation.openForm(formOptions).then(
+                success => console.log(success),
+                error => console.error(error)
+            );
+        }
+    </script>
+</head>
+
+<body>    
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 3px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .grid-item {
+            font-weight: 400;
+            padding: 3px;
+            border-top: 1px solid rgb(219, 211, 211);
+        }
+
+        .grid-item:hover {
+            cursor: pointer;
+            padding: 3px;
+            background-color: #ebe2e2;
+        }
+
+        .grid-header {    
+            padding: 3px;
+            font-weight: bold;
+        }
+    </style>
+
+    <div id="grid" class="grid-container">
+        <div class="grid-header">Кредитная программа</div>
+        <div class="grid-header">Модель</div>
+        <div class="grid-header">Срок кредита</div>
+    </div>
+</body>
+</html>

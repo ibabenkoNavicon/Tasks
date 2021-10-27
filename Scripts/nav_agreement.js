@@ -27,8 +27,8 @@ Navicon.nav_agreement = (function ()
     // 2-1. При создании объекта Договор, сразу после открытия карточки доступны для редактирования поля: номер,
     // дата договора, контакт и модель. Остальные поля - скрыты. Вкладка с данными по кредиту скрыта.
     var setFieldAfterCreatingObject = function() {
-        if (getFormType() != FormTypes.Create) 
-            return;
+        if (getFormType() != FormTypes.Create) return;
+
         visibleTab([Tabs.Tab2], false);
         visibleCtrl([Elements.Credit, Elements.Fact], false);
     }
@@ -36,9 +36,8 @@ Navicon.nav_agreement = (function ()
     // 2-2.  На объекте Договор, после выбора значения в полях контакт и автомобиль, становиться доступной
     // вкладка кредитная программа.
     var autoOrContact_OnChange = function() {
-        try 
-        {
-            const hasValue = getValue(Elements.Auto) != null && getValue(Elements.Contact) != null
+        try {
+            let hasValue = getValue(Elements.Auto) != null && getValue(Elements.Contact) != null
             visibleCtrl([Elements.Credit], hasValue);
         }
         catch(ex) {
@@ -49,9 +48,8 @@ Navicon.nav_agreement = (function ()
     // 2-3.  На объекте Договор, после выбора кредитной программы, становятся доступными для редактирования 
     // поля, связанные с расчетом кредита.
     var credit_onChange = function() {
-        try 
-        {
-            const hasValue = getValue(Elements.Credit) != null;
+        try {
+            let hasValue = getValue(Elements.Credit) != null;
 
             visibleTab([Tabs.Tab2], hasValue);
             visibleCtrl([Elements.Fact], hasValue);
@@ -72,39 +70,35 @@ Navicon.nav_agreement = (function ()
     var auto_onChange = function() {
         try 
         {
-            const autoIdValue = getValue(Elements.Auto);
-            const creditIdValue = getValue(Elements.Credit);
+            let autoIdValue = getValue(Elements.Auto);
+            let creditIdValue = getValue(Elements.Credit);
         
-            if (checkRefId(autoIdValue) == false)
-            {
+            if (checkRefId(autoIdValue) == false) {
                 setValue(Elements.Credit, null);
                 fireOnChange([Elements.Credit]); 
                 return;
             }
 
-            const autoRefId = autoIdValue[0].id;
+            let autoRefId = autoIdValue[0].id;
 
-            var arrPromises = [Xrm.WebApi.retrieveRecord(Entities.Auto, autoRefId,  
+            let arrPromises = [Xrm.WebApi.retrieveRecord(Entities.Auto, autoRefId,  
                 "?$select=nav_used,nav_amount&$expand=nav_modelid($select=nav_recommendedamount)")];
 
-            if (checkRefId(creditIdValue) == true)
-            {
-                const creditRefId = creditIdValue[0].id;
+            if (checkRefId(creditIdValue) == true) {
+                let creditRefId = creditIdValue[0].id;
                 arrPromises.push(Xrm.WebApi.retrieveMultipleRecords('nav_nav_auto_nav_credit', 
                     `?$filter=nav_autoid eq ${autoRefId} and nav_creditid eq ${creditRefId}`))
             }
 
             Xrm.Utility.showProgressIndicator("Загрузка...");
             Promise.all(arrPromises).then(   
-                (results) => {    
+                results => {    
                     try {
-                        if (results[0] != null)
-                        {
+                        if (results[0] != null) {
                             let vals = results[0]; 
                             setValue(Elements.Summa, vals.nav_used ? vals.nav_amount : vals.nav_modelid.nav_recommendedamount);
                         }  
-                        if (results[1] != null && results[1].length == 0)
-                        {
+                        if (results[1] != null && results[1].length == 0) {
                             setValue(Elements.Credit, null);
                             fireOnChange([Elements.Credit]); 
                         }
@@ -113,8 +107,8 @@ Navicon.nav_agreement = (function ()
                         console.log(ex);
                     }
                 },
-                (error) => { console.log(error.message) }
-            ).finally( () => { Xrm.Utility.closeProgressIndicator() } );
+                error => console.log(error.message)
+            ).finally(() => Xrm.Utility.closeProgressIndicator());
     
             //setAutoAmount();
         }
@@ -127,12 +121,11 @@ Navicon.nav_agreement = (function ()
     // то в договоре при выборе кредитной программы в списке лукап поля должны быть доступны только программы,
     // связанные  с выбранным объектом Автомобиль.
     var setFilterCredit = function() {
-        try 
-        {
-            const autoValue = getValue(Elements.Auto);
+        try {
             const viewName = "small_nav_credit";
             const viewId = '{51645BA7-072F-48C6-AC4D-9E64E8C167FB}';
-            const autoRefId = checkRefId(autoValue) ? autoValue[0].id : '';
+            let autoValue = getValue(Elements.Auto);
+            let autoRefId = checkRefId(autoValue) ? autoValue[0].id : '';
 
             const fetchXml = [ 
             "<fetch>",
@@ -166,14 +159,13 @@ Navicon.nav_agreement = (function ()
     // 2-6.  На объекте Договор, реализовать функцию для поля номер договора - по завершении ввода, оставлять
     // только цифры и тире. 
     var name_onChange = function() {
-        try 
-        {
-            var nameValue = getValue(Elements.Name); 
+        try {
+            let nameValue = getValue(Elements.Name); 
 
             if (nameValue == null) return;
 
             const regex = /[^0-9-]+/g;
-            const nameCleared = nameValue.replaceAll(regex, '');
+            let nameCleared = nameValue.replaceAll(regex, '');
 
             setValue(Elements.Name, nameCleared);
             console.log(`onChangeName() - before: ${nameValue} after: ${nameCleared}`);
@@ -188,14 +180,14 @@ Navicon.nav_agreement = (function ()
     // блокировать сохранение формы.
     var checkCreditEndDate = function() {
         const uniqueId = "credit_error_id";
-        const creditValue = getValue(Elements.Credit);
         const dateValue = getValue(Elements.Date);
+        let creditValue = getValue(Elements.Credit);
 
         if (checkRefId(creditValue) == false || dateValue == null) return;
 
         Xrm.Utility.showProgressIndicator("Загрузка...");
         Xrm.WebApi.retrieveRecord(Entities.Credit, creditValue[0].id, "?$select=nav_dateend").then(
-            (result) => {
+            result => {
                 try {
                     let dateEnd = Date.parse(result.nav_dateend);
                     if (dateValue > dateEnd && _isNotifiCredit == false) {
@@ -211,20 +203,20 @@ Navicon.nav_agreement = (function ()
                     console.log(ex);
                 }
             },
-            (error) => { console.log(error.message) }
-        ).finally( () => { Xrm.Utility.closeProgressIndicator() } );
+            error => console.log(error.message)
+        ).finally(() => Xrm.Utility.closeProgressIndicator());
     }
 
     // 3-2.	Объект Договор: после выбора значения в поле кредитная программа, срок кредита должен
     // подставляться из выбранной кредитной программы в договор.
     var setCreditPeriod = function () {    
-        const creditValue = getValue(Elements.Credit);
+        let creditValue = getValue(Elements.Credit);
         
         if (checkRefId(creditValue) == false) return;
 
         Xrm.Utility.showProgressIndicator("Загрузка...");
         Xrm.WebApi.retrieveRecord(Entities.Credit, creditValue[0].id, "?$select=nav_creditperiod").then(
-            (result) => {
+            result => {
                 try {
                  setValue(Elements.CreditPeriod, result.nav_creditperiod) 
                 }            
@@ -232,8 +224,8 @@ Navicon.nav_agreement = (function ()
                      console.log(ex);
                 }
             },
-            (error) => { console.log(error.message) }
-        ).finally( () => { Xrm.Utility.closeProgressIndicator() } );
+            error => console.log(error.message)
+        ).finally(() => Xrm.Utility.closeProgressIndicator());
     }
 
     self.onLoad = function(context) {
@@ -249,7 +241,7 @@ Navicon.nav_agreement = (function ()
             addOnChange([Elements.Contact, Elements.Auto], autoOrContact_OnChange);
             addOnChange([Elements.Auto], auto_onChange);
 
-            getCtrl(Elements.Credit).addPreSearch(() => { setFilterCredit() });
+            getCtrl(Elements.Credit).addPreSearch(() => setFilterCredit());
 
             fireOnChange([Elements.Contact, Elements.Credit]);
         }

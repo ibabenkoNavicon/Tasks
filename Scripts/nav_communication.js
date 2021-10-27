@@ -14,11 +14,7 @@ Navicon.nav_communication = (function ()
         Type: 'nav_type',
         Main: 'nav_main'
       };
-
-    // 2-7. На форме объекта Средство связи, при создании поля Телефон и Email скрыты. При выборе
-    // пользователем значения в поле Тип, необходимо отображать соответствующее поле: 
-    //      Если тип = Телефон, отображать поле Телефон
-    //      Если тип = E-mail, отображать поле Email.  
+ 
     var type_onChange = function() {
         try {
             const typeValue = getValue(Element.Type);   
