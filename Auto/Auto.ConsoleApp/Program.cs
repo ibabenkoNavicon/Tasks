@@ -29,6 +29,7 @@ namespace Auto.ConsoleApp
 
             if (client.LastCrmException != null)
             {
+                Log.Error(ex.Message);
             }
 
             var service = (IOrganizationService)client;
@@ -39,6 +40,7 @@ namespace Auto.ConsoleApp
             }
             catch (Exception ex)
             {
+                Log.Error(ex.Message);
             }
 
             Console.Read();
@@ -46,58 +48,52 @@ namespace Auto.ConsoleApp
 
         private static void UpdateContacts(IOrganizationService service)
         {
-            //Logger.Log.Info("Начало процесса обновления контактов");
+//            QueryExpression query = new QueryExpression(nav_communication.EntityLogicalName);
+//            query.ColumnSet = new ColumnSet(
+//                nav_communication.Fields.nav_type,
+//                nav_communication.Fields.nav_phone,
+//                nav_communication.Fields.nav_email,
+//                nav_communication.Fields.nav_contactid);
 
-            //Logger.Log.Info("Формирование запроса к БД");
-            QueryExpression query = new QueryExpression(nav_communication.EntityLogicalName);
-            query.ColumnSet = new ColumnSet(
-                nav_communication.Fields.nav_type,
-                nav_communication.Fields.nav_phone,
-                nav_communication.Fields.nav_email,
-                nav_communication.Fields.nav_contactid);
+//            query.NoLock = true;
+//            query.Criteria.AddCondition(nav_communication.Fields.nav_main, ConditionOperator.Equal, true);
 
-            query.NoLock = true;
-            query.Criteria.AddCondition(nav_communication.Fields.nav_main, ConditionOperator.Equal, true);
+//            var link = query.AddLink(Contact.EntityLogicalName, nav_communication.Fields.nav_contactid, Contact.Fields.ContactId);
+//            link.EntityAlias = "co";
+//            link.Columns = new ColumnSet(Contact.Fields.Telephone1, Contact.Fields.EMailAddress1, Contact.Fields.ContactId);
 
-            var link = query.AddLink(Contact.EntityLogicalName, nav_communication.Fields.nav_contactid, Contact.Fields.ContactId);
-            link.EntityAlias = "co";
-            link.Columns = new ColumnSet(Contact.Fields.Telephone1, Contact.Fields.EMailAddress1, Contact.Fields.ContactId);
+//            var result = service.RetrieveMultiple(query);
+//;
+//            foreach (var entity in result.Entities.Select(e => e.ToEntity<nav_communication>()))
+//            {
+//                var contactEmail = (string)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.EMailAddress1}")?.Value;
+//                var contactPhone = (string)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.Telephone1}")?.Value;
+//                var id = (Guid)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.ContactId}")?.Value;
 
-            //Logger.Log.Info("Запрос к БД");
-            var result = service.RetrieveMultiple(query);
+//                Contact contact = new Contact();
+//                contact.Id = id;
+//                contact.ContactId = id;
 
-            //Logger.Log.Info("Начало обнавления контактов на основе полученной информации");
-            foreach (var entity in result.Entities.Select(e => e.ToEntity<nav_communication>()))
-            {
-                var contactEmail = (string)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.EMailAddress1}")?.Value;
-                var contactPhone = (string)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.Telephone1}")?.Value;
-                var id = (Guid)entity.GetAttributeValue<AliasedValue>($"{link.EntityAlias}.{Contact.Fields.ContactId}")?.Value;
+//                if (entity.nav_type == nav_communication_nav_type.Telefon && entity.nav_phone != null && contactPhone == null)
+//                {
+//                    contact.Telephone1 = entity.nav_phone;
 
-                Contact contact = new Contact();
-                contact.Id = id;
-                contact.ContactId = id;
+//                    Log.Info($"Обновление телефона у контакта Id = {contact.Id}");
+//                    service.Update(contact);
+//                    Log.Info($"Контакт Id = {contact.Id} успешно обновлен");
+//                }
+//                else if (entity.nav_type == nav_communication_nav_type.E_mail && entity.nav_email != null && contactEmail == null)
+//                {
+//                    Log.Info($"Обновление email у контакта Id = {contact.Id}");
 
-                if (entity.nav_type == nav_communication_nav_type.Telefon && entity.nav_phone != null && contactPhone == null)
-                {
-                    contact.Telephone1 = entity.nav_phone;
+//                    contact.EMailAddress1 = entity.nav_email;
+//                    service.Update(contact);
 
-                    Log.Info($"Обновление телефона у контакта Id = {contact.Id}");
-                    service.Update(contact);
-                    Log.Info($"Контакт Id = {contact.Id} успешно обновлен");
-                }
-                else if (entity.nav_type == nav_communication_nav_type.E_mail && entity.nav_email != null && contactEmail == null)
-                {
-                    Log.Info($"Обновление email у контакта Id = {contact.Id}");
+//                    Log.Info($"Контакт Id = {contact.Id} успешно обновлен");
+//                }
+//            }
 
-                    contact.EMailAddress1 = entity.nav_email;
-                    service.Update(contact);
-
-                    Log.Info($"Контакт Id = {contact.Id} успешно обновлен");
-                }
-            }
-
-            Log.Info("Все контакты успешно обновлены");
-        }
-
+//            Log.Info("Все контакты успешно обновлены");
+//        }
     }
 }

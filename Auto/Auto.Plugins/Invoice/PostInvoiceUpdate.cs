@@ -5,7 +5,7 @@ namespace Auto.Plugins.Invoice
 {
     public sealed class PostInvoiceUpdate : BasePlugin
     {
-        protected override void HandlerExecute(IInfoService info)
+        protected override void HandlerExecute(IInfoHandler info)
         {
             InvoiceHandler handler = new InvoiceHandler(info);
 

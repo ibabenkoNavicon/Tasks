@@ -8,13 +8,13 @@ namespace Auto.Common.Extensions
     {
         const string TARGET = "Target";
 
-        protected abstract void HandlerExecute(IInfoService info);
+        protected abstract void HandlerExecute(IInfoHandler info);
 
         protected virtual Guid? getUserId() => Guid.Empty;
 
         public void Execute(IServiceProvider serviceProvider)
         {
-            HandlerInfo info = new HandlerInfo();
+            InfoHandler info = new InfoHandler();
 
             info.Tracing = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
             info.Tracing?.Trace("Get TracingService");

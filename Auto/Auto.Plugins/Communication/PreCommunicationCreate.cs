@@ -5,7 +5,7 @@ namespace Auto.Plugins.Communication
 {
     public sealed class PreCommunicationCreate : BasePlugin
     {
-        protected override void HandlerExecute(IInfoService info)
+        protected override void HandlerExecute(IInfoHandler info)
         {
             CommunicationHandler handler = new CommunicationHandler(info);
 

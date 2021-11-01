@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Auto.Common.Extensions
 {
-    public interface IInfoService
+    public interface IInfoHandler
     {
         ITracingService Tracing { get; }
         IOrganizationService Service { get; }

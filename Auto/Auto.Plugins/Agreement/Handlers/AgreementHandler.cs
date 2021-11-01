@@ -7,7 +7,7 @@ namespace Auto.Plugins.Agreement.Handlers
 {
     public class AgreementHandler : EntityHandler<nav_agreement>
     {
-        public AgreementHandler(IInfoService info)
+        public AgreementHandler(IInfoHandler info)
             : base(info)
         { }
 

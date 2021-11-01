@@ -8,7 +8,7 @@ namespace Auto.Plugins.Invoice.Handlers
 {
     public class InvoiceHandler : EntityHandler<nav_invoice>
     {
-        public InvoiceHandler(IInfoService info)
+        public InvoiceHandler(IInfoHandler info)
             : base(info)
         { }
 

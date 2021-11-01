@@ -5,7 +5,7 @@ namespace Auto.Plugins.Agreement
 {
     public sealed class PostAgreementUpdate : BasePlugin
     {
-        protected override void HandlerExecute(IInfoService info)
+        protected override void HandlerExecute(IInfoHandler info)
         {
             AgreementHandler handler = new AgreementHandler(info);
             

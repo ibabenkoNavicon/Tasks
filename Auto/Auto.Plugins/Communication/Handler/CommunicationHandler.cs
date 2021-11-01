@@ -7,7 +7,7 @@ namespace Auto.Plugins.Communication.Handler
 {
     public class CommunicationHandler : EntityHandler<nav_communication>
     {
-        public CommunicationHandler(IInfoService info)
+        public CommunicationHandler(IInfoHandler info)
             : base(info)
         { }
 
