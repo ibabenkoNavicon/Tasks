@@ -14,13 +14,14 @@ namespace Auto.Plugins.Invoice.Handlers
 
         public void CorrectionIvoiceType()
         {
-            _tracing.Trace("Execute CorrectionIvoiceType");
+            _tracing.Trace("Выполнение CorrectionIvoiceType");
             if (_targetEntity.nav_type == null)
                 _targetEntity.nav_type = nav_invoice_nav_type.Ruchnoe_sozdanie;
         }
 
         public void AddAgreementFactSumma()
         {
+            _tracing.Trace("Выполнение AddAgreementFactSumma");
             if (_targetEntity.nav_fact.GetValueOrDefault() == false) return;
 
             RecalcAgreementFactSumma(_targetEntity.nav_dogovorid.Id, _targetEntity.nav_amount);
@@ -28,6 +29,7 @@ namespace Auto.Plugins.Invoice.Handlers
 
         public void SubtractAgreementFactSumma()
         {
+            _tracing.Trace("Выполнение SubtractAgreementFactSumma");
             if (_targetEntity.nav_fact.GetValueOrDefault() == false) return;
 
             RecalcAgreementFactSumma(_targetEntity.nav_dogovorid.Id, new Money(-_targetEntity.nav_amount.Value));
@@ -35,6 +37,7 @@ namespace Auto.Plugins.Invoice.Handlers
 
         public void UpdateAgreementFactSumma()
         {
+            _tracing.Trace("Выполнение UpdateAgreementFactSumma");
             var invoice = _service.Retrieve(nav_invoice.EntityLogicalName, _targetEntity.Id,
                 new ColumnSet(nav_invoice.Fields.nav_fact, nav_invoice.Fields.nav_amount)).ToEntity<nav_invoice>();
 
@@ -48,6 +51,7 @@ namespace Auto.Plugins.Invoice.Handlers
 
         public void CheckAgreementAmountAndSumma()
         {
+            _tracing.Trace("Выполнение CheckAgreementAmountAndSumma");
             if (IsAgreementAmountAndSumma() == false)
                 throw new InvalidPluginExecutionException("Сумма оплаты превышает сумму договора!!!");
 
@@ -56,6 +60,7 @@ namespace Auto.Plugins.Invoice.Handlers
 
         public bool IsAgreementAmountAndSumma()
         {
+            _tracing.Trace("Выполнение IsAgreementAmountAndSumma");
             nav_agreement agreement = _service.Retrieve(nav_agreement.EntityLogicalName, _targetEntity.nav_dogovorid.Id,
                    new ColumnSet(nav_agreement.Fields.Id, nav_agreement.Fields.nav_creditid, nav_agreement.Fields.nav_summa,
                    nav_agreement.Fields.nav_fullcreditamount, nav_agreement.Fields.nav_factsumma)).
@@ -75,6 +80,7 @@ namespace Auto.Plugins.Invoice.Handlers
 
         protected void RecalcAgreementFactSumma(Guid dogovorId, Money summa)
         {
+            _tracing.Trace("Выполнение RecalcAgreementFactSumma");
             nav_agreement agreement = _service.Retrieve(nav_agreement.EntityLogicalName, dogovorId,
                     new ColumnSet(nav_agreement.Fields.Id, nav_agreement.Fields.nav_factsumma)).
                     ToEntity<nav_agreement>();

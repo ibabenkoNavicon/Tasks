@@ -13,20 +13,26 @@ namespace Auto.Plugins.Communication.Handler
 
         public void CheckMainCommunication()
         {
+            _tracing.Trace("Выполнение CheckMainCommunication");
+
             if (_targetEntity.nav_contactid == null || _targetEntity.nav_type == null || _targetEntity.nav_main == null ||
                 _targetEntity.nav_type == null || _targetEntity.nav_main == false ) return;
 
+            _tracing.Trace("Выполнение запроса");
             QueryExpression query = new QueryExpression(nav_communication.EntityLogicalName)
             {
                 ColumnSet = new ColumnSet(nav_communication.Fields.nav_type, 
                     nav_communication.Fields.nav_email, 
                     nav_communication.Fields.nav_phone)
             };
+            query.Criteria.FilterOperator = LogicalOperator.And;
             query.Criteria.AddCondition(nav_communication.Fields.nav_contactid, ConditionOperator.Equal, _targetEntity.nav_contactid.Id);
             query.Criteria.AddCondition(nav_communication.Fields.nav_main, ConditionOperator.Equal, true);
             query.Criteria.AddCondition(nav_communication.Fields.nav_type, ConditionOperator.Equal, _targetEntity.nav_type);
 
             var result = _service.RetrieveMultiple(query);
+
+            _tracing.Trace("Проверка количества записей");
             if (result.Entities.Count == 0) return;
 
             var communication = result[0].ToEntity<nav_communication>();

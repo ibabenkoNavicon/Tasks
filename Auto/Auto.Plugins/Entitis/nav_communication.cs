@@ -57,6 +57,7 @@ namespace Auto.Common.Entitis
 			public const string TimeZoneRuleVersionNumber = "timezoneruleversionnumber";
 			public const string UTCConversionTimeZoneCode = "utcconversiontimezonecode";
 			public const string VersionNumber = "versionnumber";
+			public const string nav_contact_nav_communication_contactid = "nav_contact_nav_communication_contactid";
 		}
 		
 		/// <summary>
@@ -566,6 +567,25 @@ namespace Auto.Common.Entitis
 				this.OnPropertyChanging("VersionNumber");
 				this.SetAttributeValue("versionnumber", value);
 				this.OnPropertyChanged("VersionNumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:1 nav_contact_nav_communication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("nav_contactid")]
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("nav_contact_nav_communication_contactid")]
+		public Auto.Common.Entitis.Contact nav_contact_nav_communication_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntity<Auto.Common.Entitis.Contact>("nav_contact_nav_communication_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("nav_contact_nav_communication_contactid");
+				this.SetRelatedEntity<Auto.Common.Entitis.Contact>("nav_contact_nav_communication_contactid", null, value);
+				this.OnPropertyChanged("nav_contact_nav_communication_contactid");
 			}
 		}
 		

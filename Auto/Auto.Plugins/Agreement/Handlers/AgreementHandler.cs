@@ -28,6 +28,8 @@ namespace Auto.Plugins.Agreement.Handlers
 
         public void UpdateFact()
         {
+            _tracing.Trace("Выполнение UpdateFact");
+
             if (_targetEntity.nav_fact == true || 
                 _targetEntity.nav_factsumma == null ||
                 _targetEntity.nav_fullcreditamount == null ||

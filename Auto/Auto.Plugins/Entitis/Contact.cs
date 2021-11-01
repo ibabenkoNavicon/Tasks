@@ -27,7 +27,6 @@ namespace Auto.Common.Entitis
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("contact")]
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
 	public partial class Contact : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
 	{
 		
@@ -4043,6 +4042,24 @@ namespace Auto.Common.Entitis
 				this.OnPropertyChanging("nav_contact_nav_agreement_contact");
 				this.SetRelatedEntities<Auto.Common.Entitis.nav_agreement>("nav_contact_nav_agreement_contact", null, value);
 				this.OnPropertyChanged("nav_contact_nav_agreement_contact");
+			}
+		}
+		
+		/// <summary>
+		/// 1:N nav_contact_nav_communication_contactid
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("nav_contact_nav_communication_contactid")]
+		public System.Collections.Generic.IEnumerable<Auto.Common.Entitis.nav_communication> nav_contact_nav_communication_contactid
+		{
+			get
+			{
+				return this.GetRelatedEntities<Auto.Common.Entitis.nav_communication>("nav_contact_nav_communication_contactid", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("nav_contact_nav_communication_contactid");
+				this.SetRelatedEntities<Auto.Common.Entitis.nav_communication>("nav_contact_nav_communication_contactid", null, value);
+				this.OnPropertyChanged("nav_contact_nav_communication_contactid");
 			}
 		}
 		
