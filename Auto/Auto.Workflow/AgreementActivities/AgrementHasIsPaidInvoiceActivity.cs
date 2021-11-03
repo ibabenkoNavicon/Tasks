@@ -1,0 +1,35 @@
+﻿using Auto.Common.Entitis;
+using Auto.Common.Extensions;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using Microsoft.Xrm.Sdk.Workflow;
+using System.Activities;
+
+namespace Auto.Workflows.AgreementActivities
+{
+    class AgrementHasIsPaidInvoiceActivity : BaseActivity
+    {
+        [Input("Agreement")]
+        [RequiredArgument]
+        [ReferenceTarget("nav_agreement")]
+        public InArgument<EntityReference> AgreementReference { get; set; }
+
+        [Output("The agreement has Is paid invoice")]
+        public OutArgument<bool> IsValid { get; set; }
+
+        protected override void HandlerExecute(CodeActivityContext context)
+        {
+            var agreementRef = AgreementReference.Get(context);
+
+            QueryExpression query = new QueryExpression(nav_invoice.EntityLogicalName)
+            {
+                ColumnSet = new ColumnSet(false)
+            };
+            query.Criteria.AddCondition(nav_invoice.Fields.nav_dogovorid, ConditionOperator.Equal, agreementRef.Id);
+            query.Criteria.FilterOperator = LogicalOperator.And;
+            query.Criteria.AddCondition(nav_invoice.Fields.nav_fact, ConditionOperator.Equal, true);
+
+            IsValid.Set(context, _service.RetrieveMultiple(query).Entities.Count > 0);
+        }
+    }
+}

@@ -1,10 +1,7 @@
-﻿using Auto.Common.Entitis;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
+﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 using NLog;
 using System;
-using System.Linq;
 using System.Net;
 
 namespace Auto.ConsoleApp
@@ -29,7 +26,7 @@ namespace Auto.ConsoleApp
 
             if (client.LastCrmException != null)
             {
-                Log.Error(ex.Message);
+                Log.Error(client.LastCrmException.Message);
             }
 
             var service = (IOrganizationService)client;
@@ -94,6 +91,6 @@ namespace Auto.ConsoleApp
 //            }
 
 //            Log.Info("Все контакты успешно обновлены");
-//        }
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace Auto.Common.Extensions
 {
     public abstract class BasePlugin : IPlugin
     {
-        const string TARGET = "Target";
+        const string TARGET_PARAMETR = "Target";
 
         protected abstract void HandlerExecute(IInfoHandler info);
 
@@ -20,10 +20,10 @@ namespace Auto.Common.Extensions
             info.Tracing?.Trace("Get TracingService");
 
             var pluginContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
-            info.TargetEntity = pluginContext?.InputParameters[TARGET] as Entity;
+            info.TargetEntity = pluginContext?.InputParameters[TARGET_PARAMETR] as Entity;
             if (info.TargetEntity == null)
             {
-                var entityRef = (EntityReference)pluginContext?.InputParameters[TARGET];
+                var entityRef = (EntityReference)pluginContext?.InputParameters[TARGET_PARAMETR];
                 info.TargetEntity = info.Service?.Retrieve(entityRef.LogicalName, entityRef.Id,
                     new ColumnSet(true));
             };

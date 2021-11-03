@@ -5,14 +5,17 @@ namespace Auto.Common.Extensions
 {
     public class Repository<TEntity> where TEntity : Entity
     {
-        //private TEntity _entity;
+        private TEntity _entity;
         private IOrganizationService _service;
 
-
-        public Repository(IOrganizationService service, string entityLogicalName)
+        public Repository(IOrganizationService service)
         {
             _service = service;
-            //_entity = entity;
         }
+
+        //public int GetCount(Guid guid)
+        //{
+        //    RelationshipQueryCollection 
+        //}
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Auto.Workflow
+namespace Auto.Workflows.AgreementActivities
 {
-    public class Class1
+    class AgreementRemoveInvoiceTypeAutoActivity
     {
     }
 }
