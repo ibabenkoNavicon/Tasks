@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System.Activities;
+using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    public sealed class AggrementHasInvoiceActivity : BaseActivity
+    [Description("AgrementHasInvoice")]
+    public sealed class AgrementHasInvoiceActivity : BaseActivity
     {
         [Input("Agreement")]
         [RequiredArgument]
@@ -19,7 +21,11 @@ namespace Auto.Workflows.AgreementActivities
 
         protected override void HandlerExecute(CodeActivityContext context)
         {
+            _tracing.Trace("Execute AgrementHasInvoice");
+
             var agreementRef = AgreementReference.Get(context);
+
+            _tracing.Trace($"agreementRef {agreementRef}");
 
             QueryExpression query = new QueryExpression(nav_invoice.EntityLogicalName)
             {

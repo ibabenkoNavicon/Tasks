@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
 using System;
 using System.Activities;
+using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    class AgreementSetDateOfPaymentScheduleActivity : BaseActivity
+    [Description("AgreementSetDateOfPaymentSchedule")]
+    public sealed class AgreementSetDateOfPaymentScheduleActivity : BaseActivity
     {
         [Input("Agreement")]
         [RequiredArgument]

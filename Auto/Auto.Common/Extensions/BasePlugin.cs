@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using System;
+using System.Net;
 
 namespace Auto.Common.Extensions
 {
@@ -16,18 +17,14 @@ namespace Auto.Common.Extensions
         {
             InfoHandler info = new InfoHandler();
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             info.Tracing = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
             info.Tracing?.Trace("Get TracingService");
 
             var pluginContext = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
+
             info.TargetEntity = pluginContext?.InputParameters[TARGET_PARAMETR] as Entity;
-            if (info.TargetEntity == null)
-            {
-                var entityRef = (EntityReference)pluginContext?.InputParameters[TARGET_PARAMETR];
-                info.TargetEntity = info.Service?.Retrieve(entityRef.LogicalName, entityRef.Id,
-                    new ColumnSet(true));
-            };
-            info.Tracing?.Trace($"Get TargetEntity {info.TargetEntity?.LogicalName}");
 
             var serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
             info.Tracing?.Trace("Get IOrganizationServiceFactor");
@@ -37,6 +34,14 @@ namespace Auto.Common.Extensions
 
             try
             {
+                if (info.TargetEntity == null)
+                {
+                    var entityRef = (EntityReference)pluginContext?.InputParameters[TARGET_PARAMETR];
+                    info.TargetEntity = info.Service?.Retrieve(entityRef.LogicalName, entityRef.Id,
+                        new ColumnSet(true));
+                };
+                info.Tracing?.Trace($"Get TargetEntity {info.TargetEntity?.LogicalName}");
+
                 HandlerExecute(info);
             }
             catch (Exception ex)

@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System.Activities;
+using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    class AgreementHasInvoiceManuallyActivity : BaseActivity
+    [Description("AgreementHasInvoiceManually")]
+    public sealed class AgreementHasInvoiceManuallyActivity : BaseActivity
     {
         [Input("Agreement")]
         [RequiredArgument]

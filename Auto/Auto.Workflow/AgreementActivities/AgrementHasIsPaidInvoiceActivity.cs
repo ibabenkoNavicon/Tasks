@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System.Activities;
+using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    class AgrementHasIsPaidInvoiceActivity : BaseActivity
+    [Description("AgrementHasIsPaidInvoice")]
+    public sealed class AgrementHasIsPaidInvoiceActivity : BaseActivity
     {
         [Input("Agreement")]
         [RequiredArgument]

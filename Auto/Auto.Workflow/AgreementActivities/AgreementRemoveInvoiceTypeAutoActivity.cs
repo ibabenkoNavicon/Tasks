@@ -4,10 +4,12 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Workflow;
 using System.Activities;
+using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    class AgreementRemoveInvoiceTypeAutoActivity : BaseActivity
+    [Description("AgreementRemoveInvoiceTypeAuto")]
+    public sealed class AgreementRemoveInvoiceTypeAutoActivity : BaseActivity
     {
         [Input("Agreement")]
         [RequiredArgument]
@@ -24,7 +26,7 @@ namespace Auto.Workflows.AgreementActivities
             };
             query.Criteria.AddCondition(nav_invoice.Fields.nav_dogovorid, ConditionOperator.Equal, agreementRef.Id);
             query.Criteria.FilterOperator = LogicalOperator.And;
-            query.Criteria.AddCondition(nav_invoice.Fields.nav_type, ConditionOperator.Equal, (int)nav_invoice_nav_type.Ruchnoe_sozdanie);
+            query.Criteria.AddCondition(nav_invoice.Fields.nav_type, ConditionOperator.Equal, (int)nav_invoice_nav_type.Avtomaticheskoe_sozdanie);
 
             foreach (var invoice in _service.RetrieveMultiple(query).Entities)
             {

@@ -11,8 +11,9 @@ namespace Auto.Common.Extensions
 
         public EntityHandler(IInfoHandler info)
         {
-            _service = info.Service ?? throw new ArgumentNullException(nameof(info.Service));
+            info?.Tracing?.Trace("Конструктор EntityHandler");
             _tracing = info.Tracing ?? throw new ArgumentNullException(nameof(info.Tracing));
+            _service = info.Service ?? throw new ArgumentNullException(nameof(info.Service));
             _targetEntity = (info.TargetEntity ?? throw new ArgumentNullException(nameof(info.TargetEntity))).ToEntity<TEntity>();
         }
 
