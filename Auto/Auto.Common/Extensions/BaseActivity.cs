@@ -9,7 +9,7 @@ namespace Auto.Common.Extensions
     public abstract class BaseActivity : CodeActivity
     {
         protected ITracingService _tracing;
-        protected CrmSvcContext _context;
+        protected CrmServiceContext _context;
         protected IOrganizationService _service;
         protected IWorkflowContext _workflowContext;
 
@@ -30,7 +30,7 @@ namespace Auto.Common.Extensions
 
             try
             {
-                _context = new CrmSvcContext(_service);
+                _context = new CrmServiceContext(_service);
                 _tracing?.Trace("Создан CrmSvcContext");
 
                 HandlerExecute(context);

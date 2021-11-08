@@ -10,7 +10,6 @@ using System.Linq;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    [Description("AgreementCreatePaymentSchedule")]
     public sealed class AgreementCreatePaymentScheduleActivity : BaseActivity
     {
         [Input("Agreement")]
@@ -50,25 +49,27 @@ namespace Auto.Workflows.AgreementActivities
                 //};
                 //_context.AddObject(invoice);
 
-                //var invoice = new Entity(nav_invoice.EntityLogicalName);
-                //invoice[nav_invoice.Fields.nav_name] = $"Счет №{i + 1} по договору № {agreement.nav_name}";
-                //invoice[nav_invoice.Fields.nav_date] = date.AddMonths(i).Date;
-                //invoice[nav_invoice.Fields.nav_dogovorid] = agreementRef;
-                //invoice[nav_invoice.Fields.nav_type] = (int?)nav_invoice_nav_type.Avtomaticheskoe_sozdanie;
-                //invoice[nav_invoice.Fields.nav_fact] = false;
-                //invoice[nav_invoice.Fields.nav_amount] = new Money(invoiceSumma);
+                _tracing?.Trace("Создание nav_invoice");
 
-                //_service.Create(invoice);
+                var invoice = new Entity(nav_invoice.EntityLogicalName);
+                invoice[nav_invoice.Fields.nav_name] = $"Счет №{i + 1} по договору № {agreement.nav_name}";
+                invoice[nav_invoice.Fields.nav_date] = date.AddMonths(i).Date;
+                invoice[nav_invoice.Fields.nav_dogovorid] = agreementRef;
+                invoice[nav_invoice.Fields.nav_type] = new OptionSetValue((int)nav_invoice_nav_type.Avtomaticheskoe_sozdanie);
+                invoice[nav_invoice.Fields.nav_fact] = false;
+                invoice[nav_invoice.Fields.nav_amount] = new Money(invoiceSumma);
 
-                _service.Create(new nav_invoice
-                {
-                    nav_name = $"Счет №{i + 1} по договору №{agreement.nav_name}",
-                    nav_date = date.AddMonths(i).Date,
-                    nav_dogovorid = agreementRef,
-                    nav_fact = false,
-                    nav_type = nav_invoice_nav_type.Avtomaticheskoe_sozdanie,
-                    nav_amount = new Money(invoiceSumma)
-                });
+                _service.Create(invoice);
+
+                //_service.Create(new nav_invoice
+                //{
+                //    nav_name = $"Счет №{i + 1} по договору №{agreement.nav_name}",
+                //    nav_date = date.AddMonths(i).Date,
+                //    nav_dogovorid = agreementRef,
+                //    nav_fact = false,
+                //    nav_type = nav_invoice_nav_type.Avtomaticheskoe_sozdanie,
+                //    nav_amount = new Money(invoiceSumma)
+                //});
             }
             //_context.SaveChanges();
         }

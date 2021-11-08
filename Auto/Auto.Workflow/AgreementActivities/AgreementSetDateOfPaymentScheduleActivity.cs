@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    [Description("AgreementSetDateOfPaymentSchedule")]
     public sealed class AgreementSetDateOfPaymentScheduleActivity : BaseActivity
     {
         [Input("Agreement")]
@@ -25,7 +24,13 @@ namespace Auto.Workflows.AgreementActivities
 
             DateTime val = DateTime.Now.AddDays(1).Date;
 
-            _service.Update(new nav_agreement { Id = agreementRef.Id, nav_paymentplandate = DateTime.Now.AddDays(1).Date });
+            _tracing?.Trace("Изменение даты nav_agreement");
+
+            var agreement = new Entity(nav_agreement.EntityLogicalName);
+            agreement[nav_agreement.Fields.Id] = agreementRef.Id;
+            agreement[nav_agreement.Fields.nav_paymentplandate] = DateTime.Now.AddDays(1).Date;
+
+            _service.Update(agreement);
         }
     }
 }

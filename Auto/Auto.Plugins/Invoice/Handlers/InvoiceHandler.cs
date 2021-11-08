@@ -66,14 +66,10 @@ namespace Auto.Plugins.Invoice.Handlers
                    nav_agreement.Fields.nav_fullcreditamount, nav_agreement.Fields.nav_factsumma)).
                    ToEntity<nav_agreement>();
 
-            if (nav_agreement.Fields.nav_creditid == null)
-            {
-                if (agreement.nav_factsumma == null || agreement.nav_summa.Value >= agreement.nav_factsumma.Value)
-                    return true;
-            }
-            else if (agreement.nav_factsumma == null || agreement.nav_fullcreditamount == null || 
-                    agreement.nav_factsumma.Value >= agreement.nav_fullcreditamount.Value)
-                    return true;
+            if (nav_agreement.Fields.nav_creditid == null || agreement.nav_factsumma == null || agreement.nav_summa.Value >= agreement.nav_factsumma.Value)
+                return true;
+            if (agreement.nav_factsumma == null || agreement.nav_fullcreditamount == null || agreement.nav_factsumma.Value >= agreement.nav_fullcreditamount.Value)
+                return true;
 
             return false;
         }

@@ -6,11 +6,11 @@
 //     Изменения в этом файле могут привести к неправильной работе и будут потеряны в случае
 //     повторной генерации кода.
 // </auto-generated>
-// Created via this command line: "C:\Users\Boba761\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://orgbf2f0f19.api.crm4.dynamics.com" /namespace:"Auto.Common.Entitis" /SuppressGeneratedCodeAttribute /out:"E:\Work\Navicons\Tasks\Auto\Auto.Common\Entitis\CrmSvcContext.cs" /servicecontextname:"CrmSvcContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" /interactivelogin:true 
+// Created via this command line: "C:\Users\Boba761\AppData\Roaming\MscrmTools\XrmToolBox\Plugins\DLaB.EarlyBoundGenerator\crmsvcutil.exe" /url:"https://orgbf2f0f19.api.crm4.dynamics.com" /namespace:"Auto.Common.Entitis" /SuppressGeneratedCodeAttribute /out:"E:\Work\Navicons\Tasks\Auto\Auto.Common\Entitis\CrmServiceContext.cs" /servicecontextname:"CrmServiceContext" /codecustomization:"DLaB.CrmSvcUtilExtensions.Entity.CustomizeCodeDomService,DLaB.CrmSvcUtilExtensions" /codegenerationservice:"DLaB.CrmSvcUtilExtensions.Entity.CustomCodeGenerationService,DLaB.CrmSvcUtilExtensions" /codewriterfilter:"DLaB.CrmSvcUtilExtensions.Entity.CodeWriterFilterService,DLaB.CrmSvcUtilExtensions" /namingservice:"DLaB.CrmSvcUtilExtensions.NamingService,DLaB.CrmSvcUtilExtensions" /metadataproviderservice:"DLaB.CrmSvcUtilExtensions.Entity.MetadataProviderService,DLaB.CrmSvcUtilExtensions" 
 //------------------------------------------------------------------------------
 
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
-
+[assembly: System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.93")]
 
 namespace Auto.Common.Entitis
 {
@@ -18,15 +18,14 @@ namespace Auto.Common.Entitis
 	/// <summary>
 	/// Represents a source of entities bound to a CRM service. It tracks and manages changes made to the retrieved entities.
 	/// </summary>
-	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.93")]
-	public partial class CrmSvcContext : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
+	public partial class CrmServiceContext : Microsoft.Xrm.Sdk.Client.OrganizationServiceContext
 	{
 		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		[System.Diagnostics.DebuggerNonUserCode()]
-		public CrmSvcContext(Microsoft.Xrm.Sdk.IOrganizationService service) : 
+		public CrmServiceContext(Microsoft.Xrm.Sdk.IOrganizationService service) : 
 				base(service)
 		{
 		}
@@ -56,30 +55,6 @@ namespace Auto.Common.Entitis
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_auto"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Auto.Common.Entitis.nav_auto> nav_autoSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Auto.Common.Entitis.nav_auto>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_brand"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Auto.Common.Entitis.nav_brand> nav_brandSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Auto.Common.Entitis.nav_brand>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_communication"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Auto.Common.Entitis.nav_communication> nav_communicationSet
@@ -92,18 +67,6 @@ namespace Auto.Common.Entitis
 		}
 		
 		/// <summary>
-		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_credit"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Auto.Common.Entitis.nav_credit> nav_creditSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Auto.Common.Entitis.nav_credit>();
-			}
-		}
-		
-		/// <summary>
 		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_invoice"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<Auto.Common.Entitis.nav_invoice> nav_invoiceSet
@@ -112,18 +75,6 @@ namespace Auto.Common.Entitis
 			get
 			{
 				return this.CreateQuery<Auto.Common.Entitis.nav_invoice>();
-			}
-		}
-		
-		/// <summary>
-		/// Gets a binding to the set of all <see cref="Auto.Common.Entitis.nav_model"/> entities.
-		/// </summary>
-		public System.Linq.IQueryable<Auto.Common.Entitis.nav_model> nav_modelSet
-		{
-			[System.Diagnostics.DebuggerNonUserCode()]
-			get
-			{
-				return this.CreateQuery<Auto.Common.Entitis.nav_model>();
 			}
 		}
 	}

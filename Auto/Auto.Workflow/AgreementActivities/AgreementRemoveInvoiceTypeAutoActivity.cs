@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 namespace Auto.Workflows.AgreementActivities
 {
-    [Description("AgreementRemoveInvoiceTypeAuto")]
     public sealed class AgreementRemoveInvoiceTypeAutoActivity : BaseActivity
     {
         [Input("Agreement")]
